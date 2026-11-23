@@ -1,0 +1,19 @@
+:root{--green:#1f7a4d;--green-d:#165c3a;--ink:#1d2a24;--muted:#5f6f67;--bg:#f6f8f5;--card:#fff;--line:#e3e9e5;--accent:#f2a516}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Devanagari",sans-serif;color:var(--ink);background:var(--bg)}
+header.shop{background:var(--green);color:#fff;padding:18px 16px 14px}
+.shop .wrap{max-width:1040px;margin:0 auto;display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.shop h1{margin:0;font-size:1.45rem}.shop p{margin:3px 0;font-size:.92rem;opacity:.95}
+.btn{display:inline-flex;align-items:center;gap:6px;border:0;border-radius:10px;padding:10px 14px;font-weight:600;font-size:.95rem;cursor:pointer;text-decoration:none}
+.btn-light{background:#fff;color:var(--green)}.btn-green{background:var(--green);color:#fff}.btn-green:hover{background:var(--green-d)}
+main{max-width:1040px;margin:0 auto;padding:16px}
+.toolbar{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}
+.chip{flex:0 0 auto;border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 13px;font-size:.88rem;cursor:pointer;color:var(--ink)}
+.chip.active{background:var(--green);border-color:var(--green);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:4px}
+.card .icon{font-size:2.4rem;text-align:center;background:#f0f5f1;border-radius:10px;padding:10px 0}
+.card h3{margin:6px 0 0;font-size:.98rem}.card .hi{color:var(--muted);font-size:.82rem}
+.card .unit{color:var(--muted);font-size:.85rem}.card .price{font-weight:700;font-size:1.05rem}
+.count{color:var(--muted);font-size:.88rem;margin:4px 0 10px}
+footer{text-align:center;color:var(--muted);font-size:.8rem;padding:24px 12px}

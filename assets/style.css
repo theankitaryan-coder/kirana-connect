@@ -17,3 +17,28 @@ main{max-width:1040px;margin:0 auto;padding:16px}
 .card .unit{color:var(--muted);font-size:.85rem}.card .price{font-weight:700;font-size:1.05rem}
 .count{color:var(--muted);font-size:.88rem;margin:4px 0 10px}
 footer{text-align:center;color:var(--muted);font-size:.8rem;padding:24px 12px}
+.search{width:100%;padding:11px 14px;border:1px solid var(--line);border-radius:12px;font-size:1rem;background:#fff}
+.card .actions{margin-top:6px}
+.add{width:100%;background:var(--green);color:#fff;border:0;border-radius:9px;padding:8px;font-weight:600;cursor:pointer}
+.qty{display:flex;align-items:center;justify-content:space-between;border:1px solid var(--green);border-radius:9px;overflow:hidden}
+.qty button{background:#eaf4ee;border:0;color:var(--green);font-size:1.15rem;width:36px;height:34px;cursor:pointer}
+.qty span{font-weight:700}
+.cartbar{position:sticky;bottom:0;background:var(--green);color:#fff;display:flex;justify-content:space-between;align-items:center;padding:12px 16px;gap:10px}
+.cartbar.hidden{display:none}
+.cartbar .btn{background:#fff;color:var(--green)}
+.drawer{position:fixed;inset:0;background:rgba(0,0,0,.35);display:none;z-index:20}
+.drawer.open{display:block}
+.panel{position:absolute;right:0;top:0;bottom:0;width:min(440px,100%);background:#fff;padding:16px;overflow-y:auto;display:flex;flex-direction:column;gap:12px}
+.panel h2{margin:0;font-size:1.2rem;display:flex;justify-content:space-between;align-items:center}
+.panel .x{background:none;border:0;font-size:1.4rem;cursor:pointer}
+.line{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;border-bottom:1px solid var(--line);padding:8px 0}
+.line small{color:var(--muted)}
+.line .rm{background:none;border:0;color:#b3261e;cursor:pointer;font-size:.85rem}
+.total{display:flex;justify-content:space-between;font-weight:700;font-size:1.1rem}
+form.checkout{display:flex;flex-direction:column;gap:9px}
+form.checkout label{font-size:.88rem;font-weight:600;display:flex;flex-direction:column;gap:4px}
+form.checkout input,form.checkout textarea{padding:10px;border:1px solid var(--line);border-radius:9px;font-size:.95rem;font-family:inherit}
+.radio{display:flex;gap:16px;font-weight:400!important;flex-direction:row!important}
+.err{color:#b3261e;font-size:.82rem;min-height:1em}
+.ok{background:#eaf4ee;border:1px solid #bcdcc8;border-radius:10px;padding:10px;font-size:.9rem}
+.empty{color:var(--muted);text-align:center;padding:24px 0}

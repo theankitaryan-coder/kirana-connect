@@ -19,11 +19,37 @@
 </header>
 <main>
   <div class="toolbar">
+    <input id="searchBox" class="search" type="search" placeholder="Search products – e.g. atta, doodh, Maggi" aria-label="Search products">
     <div class="chips" id="categoryChips"></div>
   </div>
   <p class="count" id="productCount"></p>
   <section class="grid" id="productGrid"></section>
 </main>
+<div class="cartbar hidden" id="cartBar">
+  <span id="cartSummary"></span>
+  <button class="btn" id="openCart">View cart →</button>
+</div>
+<div class="drawer" id="cartDrawer">
+  <div class="panel">
+    <h2>Your cart <button class="x" id="closeCart" aria-label="Close">×</button></h2>
+    <div id="cartLines"></div>
+    <div class="total"><span>Total</span><span id="cartTotal">₹0</span></div>
+    <form class="checkout" id="checkoutForm" novalidate>
+      <h3 style="margin:6px 0 0">Your details</h3>
+      <label>Name<input name="name" autocomplete="name"></label>
+      <label>Mobile number<input name="phone" inputmode="numeric" maxlength="10" placeholder="10-digit number"></label>
+      <div class="radio">
+        <label><input type="radio" name="mode" value="Home delivery" checked> Home delivery</label>
+        <label><input type="radio" name="mode" value="Pickup from shop"> Pickup from shop</label>
+      </div>
+      <label id="addrWrap">Delivery address<textarea name="address" rows="2" placeholder="House no., street, landmark"></textarea></label>
+      <label>Note for the shop (optional)<input name="note"></label>
+      <p class="err" id="formError"></p>
+      <button class="btn btn-green" type="submit">Continue</button>
+      <div class="ok" id="formOk" hidden></div>
+    </form>
+  </div>
+</div>
 <footer>Kirana Connect · Online ordering for your neighbourhood store</footer>
 <script src="data/store.js"></script>
 <script src="data/products.js"></script>

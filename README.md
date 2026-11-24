@@ -11,6 +11,12 @@ Built as the client project for Agile Software Development (CBCA251) – tracked
 - Filter products by category (KC-9)
 - Hosted free on GitHub Pages (KC-6)
 
+## Features (Sprint 2)
+- Search products by English or Hindi name (KC-10)
+- Add to cart, change quantity, remove items (KC-11)
+- Cart total, saved on the device after refresh (KC-12)
+- Checkout form: name, 10-digit mobile, delivery or pickup, address (KC-13)
+
 ## Run locally
 Open `index.html` in any browser – no build step needed.
 

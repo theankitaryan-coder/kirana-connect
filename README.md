@@ -23,6 +23,12 @@ Built as the client project for Agile Software Development (CBCA251) – tracked
 - Today's orders with counts, value and status filter (KC-16)
 - Fix: delivery/pickup radio buttons aligned with their labels (KC-33)
 
+## Features (Sprint 4)
+- Status buttons on each order (New, Packed, Out for delivery, Delivered); counts update (KC-17)
+- Choose the delivery person for a home-delivery order; shown on the order card (KC-18)
+- One-tap WhatsApp status update to the customer with a prepared message (KC-19)
+- Out-of-stock label; out-of-stock items cannot be added to the cart (KC-20)
+
 ## Run locally
 Open `index.html` in any browser – no build step needed.
 

@@ -56,14 +56,47 @@ function renderChips() {
   });
 }
 
+/* ---------- Status buttons (KC-17), delivery person (KC-18), WhatsApp update (KC-19) ---------- */
+const STATUS_TEXT = {
+  "New": "we have received your order",
+  "Packed": "your order is packed and ready",
+  "Out for delivery": "your order is out for delivery",
+  "Delivered": "your order has been delivered. Thank you for shopping with us"
+};
+function statusMessage(o) {
+  let msg = `Namaste ${o.customer.name}, ${STORE.name} here. Order ${o.id} (₹${o.total}): ${STATUS_TEXT[o.status]}.`;
+  if (o.status === "Out for delivery" && o.deliveryBy) msg += ` ${o.deliveryBy} is bringing it to you.`;
+  return msg;
+}
+function statusWaUrl(o) {
+  return "https://wa.me/91" + o.customer.phone + "?text=" + encodeURIComponent(statusMessage(o));
+}
+function updateOrder(id, change) {
+  const o = orders.find(x => x.id === id);
+  if (!o) return;
+  Object.assign(o, change);
+  saveOrders(orders);
+  renderAll();
+}
+
 function orderCard(o) {
   const c = o.customer;
+  const statusBtns = STATUSES.map(s =>
+    `<button class="sbtn${s === o.status ? " on" : ""}" data-status="${s}" data-id="${o.id}">${s}</button>`).join("");
+  const staffOpts = ["", ...STORE.deliveryStaff].map(n =>
+    `<option value="${n}"${n === (o.deliveryBy || "") ? " selected" : ""}>${n || "Choose delivery person"}</option>`).join("");
   return `<article class="order" data-id="${o.id}">
     <div class="top"><strong>${o.id}</strong><span class="badge ${badgeClass(o.status)}">${o.status}</span></div>
     <div class="meta">${new Date(o.createdAt).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" })} · ${c.name} · ${c.phone}</div>
     <div class="meta">${c.mode}${c.address ? ": " + c.address : ""}${c.note ? " · Note: " + c.note : ""}</div>
     <ul>${o.items.map(i => `<li>${i.name} (${i.unit}) × ${i.qty} – ${rupees(i.price * i.qty)}</li>`).join("")}</ul>
     <strong>Total ${rupees(o.total)}</strong>
+    <div class="ob-actions">
+      <div class="sbtns">${statusBtns}</div>
+      ${c.mode === "Home delivery" ? `<label class="dp">Delivery by <select data-assign="${o.id}">${staffOpts}</select></label>` : ""}
+      ${o.deliveryBy ? `<div class="meta">Delivery person: <b>${o.deliveryBy}</b></div>` : ""}
+      <a class="btn btn-wa" href="${statusWaUrl(o)}" target="_blank" rel="noopener">Send status to customer on WhatsApp</a>
+    </div>
   </article>`;
 }
 
@@ -75,6 +108,17 @@ function renderOrders() {
     ? list.map(orderCard).join("")
     : `<p class="empty">No ${filter === "All" ? "" : filter.toLowerCase() + " "}orders yet.</p>`;
 }
+
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-status]");
+  if (b) { updateOrder(b.dataset.id, { status: b.dataset.status }); toast("Order " + b.dataset.id + " marked " + b.dataset.status); }
+});
+document.addEventListener("change", e => {
+  if (e.target.dataset.assign) {
+    updateOrder(e.target.dataset.assign, { deliveryBy: e.target.value });
+    if (e.target.value) toast(e.target.value + " will deliver this order");
+  }
+});
 
 function renderAll() { renderStats(); renderChips(); renderOrders(); }
 

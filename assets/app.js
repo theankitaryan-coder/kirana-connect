@@ -40,7 +40,7 @@ function visibleProducts() {
   return PRODUCTS.filter(p => (state.category === "All" || p.category === state.category) && matchesSearch(p));
 }
 
-/* ---------- Catalogue (KC-8) ---------- */
+/* ---------- Catalogue (KC-8) with out-of-stock label (KC-20) ---------- */
 function renderProducts() {
   const list = visibleProducts();
   const where = state.category === "All" ? "" : " in " + state.category;
@@ -49,11 +49,14 @@ function renderProducts() {
     : "No products found" + (state.query ? " for “" + state.query + "”" : "");
   document.getElementById("productGrid").innerHTML = list.map(p => {
     const q = cart[p.id] || 0;
-    const control = q
+    const control = !p.inStock
+      ? `<button class="add" disabled>Out of stock</button>`
+      : q
       ? `<div class="qty"><button data-dec="${p.id}" aria-label="Less">−</button><span>${q}</span><button data-inc="${p.id}" aria-label="More">+</button></div>`
       : `<button class="add" data-inc="${p.id}">Add</button>`;
     return `
-    <article class="card">
+    <article class="card${p.inStock ? "" : " oos"}">
+      ${p.inStock ? "" : `<span class="oos-label">Out of stock</span>`}
       <div class="icon">${p.icon}</div>
       <h3>${p.name}</h3>
       <span class="hi">${p.hindi}</span>
@@ -72,6 +75,8 @@ function saveCart() {
   try { localStorage.setItem(CART_KEY, JSON.stringify(cart)); } catch (e) { /* storage unavailable */ }
 }
 function changeQty(id, delta) {
+  const p = byId(id);
+  if (delta > 0 && p && !p.inStock) return;        // KC-20: out-of-stock items cannot be added
   const q = (cart[id] || 0) + delta;
   if (q <= 0) delete cart[id]; else cart[id] = q;
   saveCart();
@@ -79,7 +84,7 @@ function changeQty(id, delta) {
   renderCart();
 }
 function cartItems() {
-  return Object.entries(cart).map(([id, qty]) => ({ p: byId(id), qty })).filter(x => x.p);
+  return Object.entries(cart).map(([id, qty]) => ({ p: byId(id), qty })).filter(x => x.p && x.p.inStock);
 }
 function cartTotal() { return cartItems().reduce((s, x) => s + x.p.price * x.qty, 0); }
 function cartCount() { return cartItems().reduce((s, x) => s + x.qty, 0); }

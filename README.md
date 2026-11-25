@@ -17,6 +17,12 @@ Built as the client project for Agile Software Development (CBCA251) – tracked
 - Cart total, saved on the device after refresh (KC-12)
 - Checkout form: name, 10-digit mobile, delivery or pickup, address (KC-13)
 
+## Features (Sprint 3)
+- Place order: order ID + one-tap WhatsApp message to the shop with items, total and customer details (KC-14)
+- Order Book page for shop staff (`orders.html`): opening the link in the WhatsApp message adds the order, no duplicates (KC-15)
+- Today's orders with counts, value and status filter (KC-16)
+- Fix: delivery/pickup radio buttons aligned with their labels (KC-33)
+
 ## Run locally
 Open `index.html` in any browser – no build step needed.
 

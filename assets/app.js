@@ -133,10 +133,33 @@ document.getElementById("checkoutForm").addEventListener("submit", e => {
   const d = readForm(e.target);
   const err = validate(d);
   document.getElementById("formError").textContent = err;
-  const ok = document.getElementById("formOk");
-  ok.hidden = !!err;
-  if (!err) ok.textContent = "Details saved. Order sending will be added in the next sprint.";
+  if (err) return;
+  placeOrder(d);
 });
+
+/* ---------- Send order on WhatsApp (KC-14) ---------- */
+function placeOrder(d) {
+  const order = {
+    id: newOrderId(),
+    createdAt: new Date().toISOString(),
+    items: cartItems().map(({ p, qty }) => ({ id: p.id, name: p.name, unit: p.unit, price: p.price, qty })),
+    total: cartTotal(),
+    customer: { name: d.name, phone: d.phone, mode: d.mode, address: d.mode === "Home delivery" ? d.address : "", note: d.note || "" },
+    status: "New"
+  };
+  const text = orderMessage(order, orderBookUrl(order));
+  const waUrl = "https://wa.me/" + STORE.whatsapp + "?text=" + encodeURIComponent(text);
+  const ok = document.getElementById("formOk");
+  ok.hidden = false;
+  ok.innerHTML = `<div class="success">
+      <span>Order ID</span><span class="oid">${order.id}</span>
+      <span>Tap below to send this order to ${STORE.name} on WhatsApp. No call needed.</span>
+      <a class="btn btn-wa" id="waBtn" href="${waUrl}" target="_blank" rel="noopener">Send order on WhatsApp</a>
+    </div>`;
+  document.getElementById("waBtn").addEventListener("click", () => {
+    cart = {}; saveCart(); renderProducts(); renderCart();
+  });
+}
 
 renderShop();
 renderChips();
